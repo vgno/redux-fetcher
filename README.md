@@ -29,7 +29,6 @@ const fetchWeather = createFetchAction('weather', url);
 ## Create fetch reducer for this action
 This should be added to your Redux like any other reducer.
 ```js
-// add this to Redux like normal
 const fetchWeatherReducer = createFetchReducer('weather');
 ```
 
