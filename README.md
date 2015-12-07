@@ -21,7 +21,7 @@ Create your fetch reducers using `createFetchReducer`
 ## Create action for fetching data
 The action can be dispatch()'ed' directly, or through `mapDispatchToProps` like normal for use within your React components if using `react-redux`
 ```js
-const url = http://api.openweathermap.org/data/2.5/forecast/daily?q=Oslo&appid=2de143494c0b295cca9337e1e96b00e0;
+const url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=Oslo&appid=2de143494c0b295cca9337e1e96b00e0';
 const fetchWeather = createFetchAction('weather', url);
 ```
 
