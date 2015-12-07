@@ -5,7 +5,7 @@ Recommended method for simple isomorphic HTTP data fetching in [Roc](https://git
 
 # Install
 ```
-npm install redux-fetcher
+npm install --save redux-fetcher
 ```
 
 Import
@@ -19,7 +19,7 @@ Create your fetch reducers using `createFetchReducer`
 # Example Usage (HTTP GET)
 
 ## Create action for fetching data
-The action can be dispatch()'ed' directly, or through `mapDispatchToProps` like normal for use within your React components if using `react-redux`
+The action can be dispatch()'ed' directly, or if using `react-redux` through `mapDispatchToProps` like normal in your React components.
 ```js
 const url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=Oslo&appid=2de143494c0b295cca9337e1e96b00e0';
 const fetchWeather = createFetchAction('weather', url);
@@ -45,10 +45,10 @@ When `fetchAction` is dispatched the following will happen internally:
 - It (through `redux-api-middleware`) performs an isomorphic `fetch` using `url`. This operation is async, and what it does depends if the fetch fails or succeeds.
 
 #### If fetch succeeds
-- It dispatches an action named `WEATHER_FETCH_SUCCESS`. The response will be stored as a string in `store.weather.payload`. `store.weather.error` and `store.weather.loading` will always be false after reducing.
+- It dispatches an action named `WEATHER_FETCH_SUCCESS`. The response will be stored as a string in `store.weather.payload`. `store.weather.error` and `store.weather.loading` will always be false after reducing a success.
 
 #### If fetch fails
-- It dispatches an action named `WEATHER_FETCH_FAILURE`. `store.weather.payload` will be `undefined`. `store.weather.error` will be set to a string describing the error suitable for logging and `store.weather.loading` will be false after reducing.
+- It dispatches an action named `WEATHER_FETCH_FAILURE`. `store.weather.payload` will be `undefined`. `store.weather.error` will be set to a string describing the error suitable for logging and `store.weather.loading` will be false after reducing an error.
 
 # Options
 `fetchAction(name, url, options)`  
