@@ -1,6 +1,13 @@
 import { CALL_API } from 'redux-api-middleware';
 
-import { createPendingType, createDefaultBailout, overrideOptions } from './util-action';
+import {
+    createPendingType,
+    createSuccessType,
+    createFailureType,
+    createDefaultBailout,
+    extendAction
+} from './util-action';
+
 import { fetchSuccess, fetchFailure, fetchPending } from './util-reducer';
 
 /**
@@ -19,20 +26,22 @@ export function createFetchAction(id, url, options = { force: false, method: 'GE
     const storeNode = id.toLowerCase();
 
     const bailout = options.bailout || createDefaultBailout(storeNode, options.force);
-    const overridenOptions = overrideOptions({
+    const baseAction = {
         endpoint: url,
         bailout,
         method: options.method,
         types: [
             createPendingType(actionPrefix, url),
-            actionPrefix + '_FETCH_SUCCESS',
-            actionPrefix + '_FETCH_FAILURE'
+            createSuccessType(actionPrefix, url),
+            createFailureType(actionPrefix, url)
         ]
-    }, options);
-
-    return {
-        [CALL_API]: overridenOptions
     };
+
+    const middlewareAction = {
+        [CALL_API]: extendAction(baseAction, options)
+    };
+
+    return middlewareAction;
 }
 
 /**
@@ -47,17 +56,17 @@ export function createFetchReducer(id) {
 
     const actionPrefix = id.toUpperCase();
 
-    return (state = {}, { type, payload }) => {
+    return (state = {}, { type, payload, meta }) => {
         if (type === actionPrefix + '_FETCH_SUCCESS') {
-            return fetchSuccess(payload);
+            return fetchSuccess(payload, meta);
         }
 
         if (type === actionPrefix + '_FETCH_FAILURE') {
-            return fetchFailure(payload);
+            return fetchFailure(payload, meta);
         }
 
         if (type === actionPrefix + '_FETCH_PENDING') {
-            return fetchPending(payload);
+            return fetchPending(payload, meta);
         }
 
         return state;
