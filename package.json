@@ -42,7 +42,9 @@
     "sinon": "~1.17.2",
     "sinon-chai": "~2.8.0",
     "npm-check-updates": "~2.5.4",
-    "redux-api-middleware": "github:vgno/redux-api-middleware#v1.0.0-beta4"
+    "redux-api-middleware": "github:vgno/redux-api-middleware#v1.0.0-beta4",
+    "codeclimate-test-reporter": "~0.1.1",
+    "coveralls": "~2.11.4"
   },
   "peerDependencies": {
       "redux-api-middleware": "github:vgno/redux-api-middleware#v1.0.0-beta4"
