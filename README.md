@@ -1,6 +1,6 @@
 # redux-fetcher
-Really simple isomorphic fetch for Redux  
-Can be used in any Redux project.
+Really simple isomorphic fetch for Redux. Can be used in any Redux project that uses [redux-api-middleware](https://github.com/vgno/redux-api-middleware).
+
 Recommended method for simple isomorphic HTTP data fetching in [Roc](https://github.com/vgno/roc-web-react).
 
 # Install
@@ -14,7 +14,7 @@ import { createFetchAction, createFetchReducer } from 'redux-fetcher';
 ```
 
 Create your fetch actions using `createFetchAction`.  
-Create your fetch reducers using `createFetchReducer`
+Create your fetch reducers using `createFetchReducer`.
 
 # Example Usage (HTTP GET)
 The example illustrates requesting some data from the open weather map API.
@@ -30,7 +30,7 @@ const fetchWeather = createFetchAction(
     'http://api.openweathermap.org/data/2.5/forecast/daily?q=Oslo&appid=2de143494c0b295cca9337e1e96b00e0'
 );
 ```
-The action `fetchWeather` can then be dispatch()'ed' directly, or if using `react-redux` through `mapDispatchToProps` and used like normal in your React components.
+The action `fetchWeather` can then be used with `dispatch()` directly, or if using `react-redux` through `mapDispatchToProps` and used like normal in your React components.
 
 ## Create fetch reducer for this action
 The generated reducer will ensure that the state is updated according to the internal fetch actions.
@@ -44,7 +44,8 @@ const myReducers = combineReducers({
 });
 ```
 
-Done!  
+Done!
+
 For the rest of this section we assume
 ```js
 const state = store.getState();
