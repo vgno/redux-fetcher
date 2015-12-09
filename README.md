@@ -1,4 +1,11 @@
 # redux-fetcher
+![stability alpha](https://img.shields.io/badge/stability-alpha-red.svg)
+[![redux-fetcher](https://img.shields.io/npm/v/redux-fetcher.svg)](https://www.npmjs.com/package/redux-fetcher)
+[![Build Status](https://travis-ci.org/vgno/redux-fetcher.svg)](https://travis-ci.org/vgno/redux-fetcher)
+[![Code Climate](https://codeclimate.com/github/vgno/redux-fetcher/badges/gpa.svg)](https://codeclimate.com/github/vgno/redux-fetcher)
+[![Coverage Status](https://coveralls.io/repos/vgno/redux-fetcher/badge.svg?branch=master&service=github)](https://coveralls.io/github/vgno/redux-fetcher?branch=master)
+[![Dependency status](https://david-dm.org/vgno/redux-fetcher.svg)](https://david-dm.org/vgno/redux-fetcher.svg)
+
 Really simple isomorphic fetch for Redux. Can be used in any Redux project that uses [redux-api-middleware](https://github.com/vgno/redux-api-middleware).
 
 Recommended method for simple isomorphic HTTP data fetching in [Roc](https://github.com/vgno/roc-web-react).
