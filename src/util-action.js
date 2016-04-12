@@ -1,7 +1,7 @@
 export function createDefaultBailout(id, force) {
     return (state) => {
         if (state[id]) {
-            const cached = !!state[id].payload && !force;
+            const cached = !!state[id.toLowerCase()].payload && !force;
             return state[id].loading || cached;
         }
         return false;
