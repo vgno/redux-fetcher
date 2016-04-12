@@ -23,9 +23,8 @@ export function createFetchAction(id, url, options = { force: false, method: 'GE
     }
 
     const actionPrefix = id.toUpperCase();
-    const storeNode = id.toLowerCase();
 
-    const bailout = options.bailout || createDefaultBailout(storeNode, options.force);
+    const bailout = options.bailout || createDefaultBailout(id, options.force);
     const baseAction = {
         endpoint: url,
         bailout,
