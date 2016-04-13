@@ -33,10 +33,11 @@ describe('redux-fetcher', () => {
         const reduxFetcher = require('../src');
 
         describe('createFetchAction', () => {
-            let validAction;
+            let validAction, validCamelAction;
 
             beforeEach(() => {
                 validAction = reduxFetcher.createFetchAction('data', 'http://localhost/api')[CALL_API];
+                validCamelAction = reduxFetcher.createFetchAction('dataCamelCase', 'http://localhost/api')[CALL_API];
             });
 
             afterEach(() => {
@@ -75,6 +76,15 @@ describe('redux-fetcher', () => {
             it('must bail if we already have data', () => {
                 validAction.bailout({
                     data: {
+                        loading: false,
+                        payload: 'dataalreadyhere'
+                    }
+                }).should.equal(true);
+            });
+
+            it('must bail if we already have data using camelCase action string', () => {
+                validCamelAction.bailout({
+                    dataCamelCase: {
                         loading: false,
                         payload: 'dataalreadyhere'
                     }
