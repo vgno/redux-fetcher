@@ -55,7 +55,7 @@ export function createFetchReducer(id) {
 
     const actionPrefix = id.toUpperCase();
 
-    return (state = {}, { type, payload, meta }) => {
+    return (state = {}, { type, payload, meta, error }) => {
         if (type === actionPrefix + '_FETCH_SUCCESS') {
             return fetchSuccess(payload, meta);
         }
@@ -65,7 +65,7 @@ export function createFetchReducer(id) {
         }
 
         if (type === actionPrefix + '_FETCH_PENDING') {
-            return fetchPending(payload, meta);
+            return fetchPending(payload, meta, error);
         }
 
         return state;
