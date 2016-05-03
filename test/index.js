@@ -268,6 +268,31 @@ describe('redux-fetcher', () => {
                 state.meta.endpoint.should.be.equal('http://localhost/api');
             });
 
+            it('must return object containing payload with ' +
+                'name and message of error and payload in meta with no loading on fetch pending failure', () => {
+                const errorPayload = {
+                    name: 'errorname',
+                    message: 'errormessage'
+                };
+
+                const state = reducer(
+                    {},
+                    {
+                        type: 'DATA_FETCH_PENDING',
+                        meta: {
+                            endpoint: 'http://localhost/api'
+                        },
+                        payload: errorPayload,
+                        error: true
+                    }
+                );
+
+                state.loading.should.be.equal(false);
+                state.error.should.be.equal(true);
+                state.payload.should.be.equal(errorPayload);
+                state.meta.endpoint.should.be.equal('http://localhost/api');
+            });
+
             it('must return endpoint in meta with no error and active loading on fetch pending', () => {
                 const endpoint = 'http://localhost/awesomeendpoint';
                 const state = reducer({}, {

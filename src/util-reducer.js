@@ -19,10 +19,10 @@ export function fetchFailure(payload, meta) {
 }
 
 // pending fetches indicate loading and exposes the pending endpoint
-export function fetchPending(payload, meta) {
+export function fetchPending(payload, meta, error = false) {
     return {
-        loading: true,
-        error: false,
+        loading: !error,
+        error,
         payload,
         meta
     };
