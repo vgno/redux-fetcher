@@ -185,6 +185,46 @@ describe('redux-fetcher', () => {
 
                 overridenAction.method.should.be.equal('POST');
             });
+
+            it('must pass on custom meta object to the action types', () => {
+                const metaObject = { exampleKey: 'exampleValue' };
+
+                const actionWithMeta = reduxFetcher.createFetchAction(
+                  'dataCamelCase',
+                  'http://localhost/api4',
+                  undefined,
+                  metaObject)[CALL_API];
+
+                const res = {
+                    status: 200,
+                    type: 'cors'
+                };
+
+                actionWithMeta.types[0].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
+                actionWithMeta.types[1].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
+                actionWithMeta.types[2].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
+                actionWithMeta.types[2].meta(actionWithMeta, {}, undefined).exampleKey.should.be.equal('exampleValue');
+            });
+
+            it('must pass on custom meta function to the action types', () => {
+                const metaFunction = () => ({ exampleKey: 'exampleValue' });
+
+                const actionWithMeta = reduxFetcher.createFetchAction(
+                  'dataCamelCase',
+                  'http://localhost/api4',
+                  undefined,
+                  metaFunction)[CALL_API];
+
+                const res = {
+                    status: 200,
+                    type: 'cors'
+                };
+
+                actionWithMeta.types[0].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
+                actionWithMeta.types[1].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
+                actionWithMeta.types[2].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
+                actionWithMeta.types[2].meta(actionWithMeta, {}, undefined).exampleKey.should.be.equal('exampleValue');
+            });
         });
 
         describe('createFetchReducer', () => {
