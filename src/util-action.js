@@ -8,7 +8,7 @@ export function createDefaultBailout(id, force) {
     };
 }
 
-export function createSuccessType(prefix, url) {
+export function createSuccessType(prefix, url, meta) {
     return {
         type: prefix + '_FETCH_SUCCESS',
         meta: (action, state, res) => {
@@ -17,24 +17,26 @@ export function createSuccessType(prefix, url) {
                 response: {
                     status: res.status,
                     type: res.type
-                }
+                },
+                ...meta(action, state, res)
             };
         }
     };
 }
 
-export function createPendingType(prefix, url) {
+export function createPendingType(prefix, url, meta) {
     return {
         type: prefix + '_FETCH_PENDING',
-        meta: () => {
+        meta: (action, state, res) => {
             return {
-                endpoint: url
+                endpoint: url,
+                ...meta(action, state, res)
             };
         }
     };
 }
 
-export function createFailureType(prefix, url) {
+export function createFailureType(prefix, url, meta) {
     return {
         type: prefix + '_FETCH_FAILURE',
         meta: (action, state, res) => {
@@ -44,11 +46,13 @@ export function createFailureType(prefix, url) {
                     response: {
                         status: res.status,
                         type: res.type
-                    }
+                    },
+                    ...meta(action, state, res)
                 };
             }
             return {
-                endpoint: url
+                endpoint: url,
+                ...meta(action, state, res)
             };
         }
     };

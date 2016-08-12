@@ -15,11 +15,22 @@ import { fetchSuccess, fetchFailure, fetchPending } from './util-reducer';
   * @param {string} [id] - identifier for the action
   * @param {string} [url] - url to fetch
   * @param {object} [options] - options to consider when creating action
+  * @param {object|function} [meta] - an object with data to put in the FSA
+                                      action or a function to calculate it
+                                      with the following signature:
+                                      (action, state, response) -> object
   * @returns {object} - redux-api-middleware compatible action
   */
-export function createFetchAction(id, url, options = { force: false, method: 'GET', body: '' }) {
+export function createFetchAction(id, url, options = { force: false, method: 'GET', body: '' }, meta = {}) {
     if (!id || !url) {
         throw new Error('Must provide action identifier and url');
+    }
+
+    let metaFunction;
+    if (typeof meta === 'function') {
+        metaFunction = meta;
+    } else {
+        metaFunction = () => meta;
     }
 
     const actionPrefix = id.toUpperCase();
@@ -30,9 +41,9 @@ export function createFetchAction(id, url, options = { force: false, method: 'GE
         bailout,
         method: options.method,
         types: [
-            createPendingType(actionPrefix, url),
-            createSuccessType(actionPrefix, url),
-            createFailureType(actionPrefix, url)
+            createPendingType(actionPrefix, url, metaFunction),
+            createSuccessType(actionPrefix, url, metaFunction),
+            createFailureType(actionPrefix, url, metaFunction)
         ]
     };
 
