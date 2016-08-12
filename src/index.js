@@ -21,7 +21,7 @@ import { fetchSuccess, fetchFailure, fetchPending } from './util-reducer';
                                       (action, state, response) -> object
   * @returns {object} - redux-api-middleware compatible action
   */
-export function createFetchAction(id, url, options = { force: false, method: 'GET', body: '' }, meta = {}) {
+export function createFetchAction(id, url, options = {}, meta = {}) {
     if (!id || !url) {
         throw new Error('Must provide action identifier and url');
     }
@@ -33,13 +33,24 @@ export function createFetchAction(id, url, options = { force: false, method: 'GE
         metaFunction = () => meta;
     }
 
+    const defaults = {
+        force: false,
+        method: 'GET',
+        body: ''
+    };
+
+    const settings = {
+        ...defaults,
+        ...options
+    };
+
     const actionPrefix = id.toUpperCase();
 
-    const bailout = options.bailout || createDefaultBailout(id, options.force);
+    const bailout = settings.bailout || createDefaultBailout(id, settings.force);
     const baseAction = {
         endpoint: url,
         bailout,
-        method: options.method,
+        method: settings.method,
         types: [
             createPendingType(actionPrefix, url, metaFunction),
             createSuccessType(actionPrefix, url, metaFunction),
@@ -48,7 +59,7 @@ export function createFetchAction(id, url, options = { force: false, method: 'GE
     };
 
     const middlewareAction = {
-        [CALL_API]: extendAction(baseAction, options)
+        [CALL_API]: extendAction(baseAction, settings)
     };
 
     return middlewareAction;

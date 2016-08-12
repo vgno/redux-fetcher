@@ -225,6 +225,14 @@ describe('redux-fetcher', () => {
                 actionWithMeta.types[2].meta(actionWithMeta, {}, res).exampleKey.should.be.equal('exampleValue');
                 actionWithMeta.types[2].meta(actionWithMeta, {}, undefined).exampleKey.should.be.equal('exampleValue');
             });
+
+            it('must only override individual parameters from options', () => {
+                const overridenAction = reduxFetcher.createFetchAction('data', 'http://localhost/api', {
+                    force: true
+                })[CALL_API];
+
+                overridenAction.method.should.be.equal('GET');
+            });
         });
 
         describe('createFetchReducer', () => {
